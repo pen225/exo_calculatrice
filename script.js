@@ -1,61 +1,28 @@
-// Fonctions
+const btn = document.querySelector("button");
+let interval;
+let seconde = 10;
 
-// Addition
-const addition =  (nombreA, nombreB) => {
-    return nombreA + nombreB;
-}
-
-// Multiplication
-const multiplication =  (nombreA, nombreB) => {
-    return nombreA * nombreB;
-}
-
-// Soustraction
-const soustraction =  (nombreA, nombreB) => {
-    return nombreA - nombreB;
-}
-
-// Division
-const division =  (nombreA, nombreB) => {
-    if (nombreB == 0) {
-        throw new Error("Imposible de diviser par 0.")
+// Fonctions 
+ 
+const decompte = () => {
+    seconde--;
+    if (seconde == 0) {
+        stop();
+    }else {
+        document.body.innerHTML += seconde + "<br/>";
     }
-    return nombreA / nombreB;
-}
+};
+
+const start = () => {
+   interval = setInterval(decompte, 1000);
+};
+
+const stop = () => {
+    clearInterval(interval);
+    document.body.innerHTML += "Stop !";
+};
 
 
-// Création du menu
-let choix, premierNombre, deuxiemeNombre, resultat, restart; 
+// Evenements
 
-do {
-    do {
-        choix = Number(prompt("Que souhaitez-vous faire ? \n\n 1 - Addition \n 2 - Multiplication \n 3 - Soustraction \n 4 - Division \n "));
-    } while (choix != 1 && choix != 2 && choix != 3 && choix != 4);
-    
-    do {
-        premierNombre = Number(prompt("Entrez le premier nombre"));
-        deuxiemeNombre = Number(prompt("Entrez le deuxième nombre"));
-    } while (isNaN(premierNombre) || isNaN(deuxiemeNombre));
-    
-    try {
-        switch (choix) {
-            case 1:
-                resultat = addition(premierNombre, deuxiemeNombre);
-                break;
-            case 2:
-                resultat = multiplication(premierNombre, deuxiemeNombre);
-                break;
-            case 3:
-                resultat = soustraction(premierNombre, deuxiemeNombre);
-                break;
-            case 4:
-                resultat = division(premierNombre, deuxiemeNombre);
-            default:
-                throw new Error("Une erreur est survenue");
-        }
-    alert("Le resultat est : "+ resultat);
-    } catch (error) {
-        alert(error)
-    }
-    restart = confirm("Souhaitez-vous recommencez un calcul ?")
-} while (restart);
+btn.addEventListener('click', start);
